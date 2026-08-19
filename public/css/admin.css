@@ -1,0 +1,145 @@
+/* Các màn hình quản trị. */
+.admin {
+    min-height: 100vh;
+    background: #f4f5f1;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 28px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+}
+
+.admin-nav {
+    min-height: calc(100vh - 66px);
+    background: var(--ink);
+}
+
+.admin-nav a {
+    display: block;
+    padding: 13px 20px;
+    border-bottom: 1px solid #ffffff14;
+    color: #e6ece2;
+    font-size: 13px;
+}
+
+.admin-nav a.active {
+    background: var(--accent);
+    color: #fff;
+}
+
+.admin-main {
+    padding: 30px;
+}
+
+.admin-panel {
+    padding: 20px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: var(--radius);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat {
+    padding: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.stat span,
+.stat b {
+    display: block;
+}
+
+.stat span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.stat b {
+    margin: 5px 0;
+    font-size: 23px;
+}
+
+.trend {
+    color: var(--green);
+    font-size: 12px;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.bar-chart {
+    display: flex;
+    height: 210px;
+    align-items: end;
+    justify-content: space-around;
+    gap: 12px;
+    padding: 22px 15px 28px;
+    border-bottom: 1px solid var(--line);
+}
+
+.bar {
+    position: relative;
+    width: 28px;
+    min-height: 6px;
+    background: var(--green);
+    border-radius: 3px 3px 0 0;
+}
+
+.bar small {
+    position: absolute;
+    bottom: -23px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+
+    .admin-layout,
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-nav {
+        display: flex;
+        min-height: auto;
+        overflow: auto;
+    }
+
+    .admin-nav a {
+        white-space: nowrap;
+        border-right: 1px solid #ffffff14;
+    }
+
+    .admin-main {
+        padding: 18px;
+    }
+}

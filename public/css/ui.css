@@ -1,0 +1,50 @@
+/* Thành phần giao diện dùng chung cho các trang có tương tác. */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: #17201988;
+}
+
+.modal {
+    position: relative;
+    width: min(430px, 100%);
+    padding: 28px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.modal-close {
+    position: absolute;
+    top: 7px;
+    right: 11px;
+    border: 0;
+    background: none;
+    font-size: 25px;
+}
+
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 40;
+    padding: 12px 17px;
+    background: var(--ink);
+    color: #fff;
+    box-shadow: var(--shadow);
+    font-size: 13px;
+}
+
+.empty {
+    padding: 46px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
