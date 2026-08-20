@@ -16,31 +16,19 @@ class Product extends Model
             p.name,
             p.slug,
             p.description,
+            p.price,
             p.is_best_seller,
 
-            MIN(pv.price) AS price,
+            pv.image_url
 
-            pi.image_url
+        FROM products p
 
-        FROM Products p
-
-        LEFT JOIN Product_Variants pv
+        LEFT JOIN product_variants pv
             ON pv.product_id = p.id
+            AND pv.is_primary = TRUE
             AND pv.hidden_at IS NULL
 
-        LEFT JOIN Product_Images pi
-            ON pi.product_id = p.id
-            AND pi.is_primary = TRUE
-
         WHERE p.hidden_at IS NULL
-
-        GROUP BY
-            p.id,
-            p.name,
-            p.slug,
-            p.description,
-            p.is_best_seller,
-            pi.image_url
 
         ORDER BY p.created_at DESC
     ";
