@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="<?= url('/public/css/layouts.css') ?>">
     <link rel="stylesheet" href="<?= url('/public/css/ui.css') ?>">
 
-    <!-- CSS riêng theo trang -->
-    <link rel="stylesheet" href="<?= url('/public/css/home.css') ?>">
-    <link rel="stylesheet" href="<?= url('/public/css/catalog.css') ?>">
-    <link rel="stylesheet" href="<?= url('/public/css/checkout.css') ?>">
-    <link rel="stylesheet" href="<?= url('/public/css/login.css') ?>">
-    <link rel="stylesheet" href="<?= url('/public/css/admin.css') ?>">
+    <!-- load page -->
+    <?php if (!empty($pageCss)): ?>
+    <?php foreach ((array)$pageCss as $css): ?>
+        <link rel="stylesheet" href="<?= url('/public/css/' . $css . '.css') ?>">
+    <?php endforeach; ?>
+    <?php endif; ?>
 </head>
 
 <body>
@@ -36,10 +36,18 @@
             </a>
 
             <!-- Tìm kiếm -->
-            <form class="search" onsubmit="search(event)">
-                <input id="search-input" placeholder="Tìm bút, sổ tay, dụng cụ học tập..." aria-label="Tìm kiếm">
+            <form class="search" action="<?= url('/products') ?>" method="GET">
+                <input type="text" name="keyword" id="search-input"
+                    value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>"
+                    placeholder="Tìm bút, sổ tay, dụng cụ học tập..." aria-label="Tìm kiếm">
 
-                <button aria-label="Tìm">⌕</button>
+                <button type="submit" class="btn-search" title="Tìm kiếm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
             </form>
 
             <div class="head-actions">
@@ -64,41 +72,26 @@
         </div>
 
         <nav class="nav">
-
             <div class="container nav-row">
 
-                <!-- Tất cả sản phẩm -->
                 <a href="<?= url('/products') ?>">
                     SẢN PHẨM
                 </a>
 
-                <!-- Bút viết -->
-                <a href="<?= url('/products?cat=but-viet') ?>">
+                <a href="<?= url('/products?category=but-viet') ?>">
                     BÚT VIẾT
                 </a>
-
-                <!-- Sổ tay -->
-                <a href="<?= url('/products?cat=vo-so') ?>">
-                    SỔ TAY
+                <a href="<?= url('/products?category=vo-so-tay') ?>">
+                    TẬP/VỞ
                 </a>
-
-                <!-- Văn phòng -->
-                <a href="<?= url('/products?cat=van-phong') ?>">
+                <a href="<?= url('/products?category=van-phong-pham') ?>">
                     VĂN PHÒNG
                 </a>
-
-                <!-- Bài viết -->
                 <a href="<?= url('/posts') ?>">
                     GÓC CẢM HỨNG
                 </a>
 
-                <!-- Quản trị
-                <a href="<?= url('/admin') ?>">
-                    QUẢN TRỊ
-                </a> -->
-
             </div>
-
         </nav>
 
     </header>

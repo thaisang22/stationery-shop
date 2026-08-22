@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var array $categories
+ */
 //default header
 require __DIR__ . '/../layouts/header.php'; ?>
 
@@ -19,24 +22,35 @@ require __DIR__ . '/../layouts/header.php'; ?>
     </section>
     <section class="section container">
         <div class="title-row">
-            <div><span class="eyebrow">MUA THEO NHU CẦU</span>
+            <div>
+                <span class="eyebrow">MUA THEO NHU CẦU</span>
                 <h2>Danh mục yêu thích</h2>
-            </div><a href="<?= url('/products') ?>" class="text-link">Xem tất cả →</a>
+            </div>
+            <a href="<?= url('/products') ?>" class="text-link">Xem tất cả →</a>
         </div>
+
         <div class="categories">
-            <a href="<?= url('/products?cat=but-viet') ?>" class="category">
-                <div class="cat-icon">✒️</div><b>Bút viết</b><small>128 sản phẩm</small>
-            </a><a href="<?= url('/products?cat=vo-so') ?>" class="category">
-                <div class="cat-icon">📒</div><b>Vở &amp; sổ tay</b><small>96 sản phẩm</small>
-            </a><a href="<?= url('/products?cat=giay') ?>" class="category">
-                <div class="cat-icon">📄</div><b>Giấy các loại</b><small>72 sản phẩm</small>
-            </a><a href="<?= url('/products?cat=dung-cu-hoc-tap') ?>" class="category">
-                <div class="cat-icon">📐</div><b>Dụng cụ học tập</b><small>84 sản phẩm</small>
-            </a><a href="<?= url('/products?cat=van-phong') ?>" class="category">
-                <div class="cat-icon">🗂️</div><b>Văn phòng phẩm</b><small>105 sản phẩm</small>
-            </a><a href="<?= url('/products?cat=ban-hoc') ?>" class="category">
-                <div class="cat-icon">🪴</div><b>Bàn học xinh</b><small>49 sản phẩm</small>
-            </a>
+            <?php
+            $icons = [
+                'but-viet' => '✒️',
+                'vo-so-tay' => '📒',
+                'giay-cac-loai' => '📄',
+                'dung-cu-hoc-tap' => '📐',
+                'van-phong-pham' => '🗂️',
+            ];
+            ?>
+
+            <?php foreach ($categories as $category): ?>
+                <a href="<?= url('/products?category_slug=' . $category['slug']) ?>" class="category">
+                    <div class="cat-icon">
+                        <?= $icons[$category['slug']] ?? '📦' ?>
+                    </div>
+                    <b><?= htmlspecialchars($category['name']) ?></b>
+                    <?php if (isset($category['product_count'])): ?>
+                        <small><?= $category['product_count'] ?> sản phẩm</small>
+                    <?php endif; ?>
+                </a>
+            <?php endforeach; ?>
         </div>
     </section>
     <section class="section section-tint">

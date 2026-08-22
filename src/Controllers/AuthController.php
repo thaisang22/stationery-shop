@@ -10,11 +10,15 @@ class AuthController extends Controller
 {
     public function login(): void
     {
-        $this->view('auth/login');
+        $this->view('auth/login', [
+            'pageCss'    => 'login',
+        ]);
     }
 
     public function register(): void
     {
-        $this->view('auth/register');
+        $this->view('auth/register', [
+            'pageCss'    => 'login',
+        ]);
     }
 }

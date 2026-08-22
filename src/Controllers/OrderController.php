@@ -10,6 +10,8 @@ class OrderController extends Controller
 {
     public function checkout(): void
     {
-        $this->view('orders/checkout');
+        $this->view('orders/checkout', [
+            'pageCss'    => 'checkout', //load css
+        ]);
     }
 }
