@@ -1,17 +1,29 @@
-:root {
-    --ink: #26332d;
-    --muted: #6d766f;
-    --paper: #fffdf7;
-    --cream: #f6f0e4;
-    --line: #ded9cc;
-    --accent: #d95f3f;
-    --green: #4e7259;
-    --yellow: #f3c961;
-    --danger: #c9483b;
-    --shadow: 0 10px 24px #2e321612;
-    --radius: 8px;
-    --max: 1240px
+.form-box {
+    padding: 22px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: var(--radius);
 }
+
+.field {
+    margin: 13px 0;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 3px;
+}
+
 
 .auth {
     max-width: 470px;

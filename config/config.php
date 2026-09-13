@@ -5,7 +5,9 @@ declare(strict_types=1);
 return [
     'app' => [
         'name' => 'Stationery Store',
-        'base_url' => '/stationery-mvc-base',
+        
+        // PROD is /
+        'base_url' => '/git-feature-index-home', 
     ],
 
     'database' => [

@@ -43,7 +43,7 @@ $queryParams = $_GET;
 
                 <!-- search -->
                 <b>Tìm kiếm</b>
-    <div class="search-box">
+    <div class="search">
         <input 
             type="text" 
             name="keyword" 
@@ -266,16 +266,15 @@ $queryParams = $_GET;
                                 <!-- INFO -->
                                 <div class="product-info">
 
-                                    <!-- RATING -->
+                                    <!-- sold -->
                                     <div>
-                                        <span class="rating">★★★★★</span>
-                                        <span class="sold">Đã bán 0</span>
+                                       <span class="sold">Đã bán <?php echo number_format($product['total_sold'] ?? $product['sold'] ?? 0); ?></span>
                                     </div>
 
                                     <!-- NAME -->
                                     <a
                                         class="product-name"
-                                        href="<?= url('/product-detail?id=' . $product['id']) ?>"
+                                        href="<?= url('/product/' . $product['slug']) ?>"
                                     >
                                         <?= htmlspecialchars($product['name']) ?>
                                     </a>

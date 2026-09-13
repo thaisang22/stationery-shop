@@ -8,5 +8,14 @@ use App\Core\Model;
 
 class User extends Model
 {
-    // Database queries for users will be added here later.
+    public function findById(int $userId): ?array
+    {
+        $sql = "SELECT * FROM users WHERE id = :id LIMIT 1";
+        $statement = $this->db->prepare($sql);
+        $statement->bindValue(':id', $userId, \PDO::PARAM_INT);
+        $statement->execute();
+        $user = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        return $user ?: null;
+    }
 }

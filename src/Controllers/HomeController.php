@@ -15,11 +15,12 @@ class HomeController extends Controller
         $productModel = new Product();
         $productsBestSeller = $productModel->bestSeller();
         $categories = $productModel->getCategorys();
-
+        $productsNew = $productModel->productsNew();
         $this->view('home/index', [
             'pageCss'    => 'home',
-            'bestSeller' => $productsBestSeller,
+            'productsBestSeller' => $productsBestSeller,
             'categories' => $categories,
+            'productsNew' => $productsNew,
         ]);
     }
 }
