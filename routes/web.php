@@ -18,7 +18,7 @@ $router->get('/products', [
     'index'
 ]);
 
-$router->get('/product', [
+$router->get('/product/{slug}', [
     ProductController::class,
     'detail'
 ]);
@@ -27,10 +27,27 @@ $router->get('/cart', [
     CartController::class,
     'index'
 ]);
+$router->post('/cart/add', [
+    CartController::class,
+    'add'
+]);
+$router->post('/cart/update', [
+    CartController::class,
+    'update'
+]);
+$router->post('/cart/remove', [
+    CartController::class,
+    'remove'
+]);
 
 $router->get('/login', [
     AuthController::class,
     'login'
+]);
+
+$router->post('/login/mock', [
+    AuthController::class,
+    'mockLogin'
 ]);
 
 $router->get('/register', [
@@ -38,15 +55,15 @@ $router->get('/register', [
     'register'
 ]);
 
-$router->get('/checkout', [
-    OrderController::class,
-    'checkout'
-]);
+$router->get('/checkout', [App\Controllers\OrderController::class, 'checkout']);
+$router->post('/checkout/process', [App\Controllers\OrderController::class, 'process']);
+$router->get('/checkout/success', [App\Controllers\OrderController::class, 'success']);
 
 $router->get('/posts', [
     PostController::class,
     'index'
 ]);
+
 $router->get('/admin', [AdminController::class, 'dashboard']);
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/products', [AdminController::class, 'products']);

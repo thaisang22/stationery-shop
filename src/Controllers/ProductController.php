@@ -52,11 +52,20 @@ class ProductController extends Controller
         ]);
     }
 
-    public function detail(): void
+    public function detail(string $slug): void
     {
-        $this->view('products/detail');
-    }
+        $productModel = new Product();
 
+        $productDetail = $productModel->findBySlug($slug);
+        $variants = $productModel->getVariantsByProductId($productDetail['id']);
+        
+
+        $this->view('products/detail', [
+            'pageCss' => 'catalog',
+            'productDetail' => $productDetail,
+            'variants' => $variants,
+        ]);
+    }
 
 
 }

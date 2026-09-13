@@ -1,6 +1,7 @@
 RewriteEngine On
 
-RewriteBase /stationery-mvc-base/
+#produtionc is / /
+RewriteBase /git-feature-index-home/ 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

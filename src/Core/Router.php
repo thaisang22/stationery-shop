@@ -36,15 +36,29 @@ class Router
         string $method,
         string $requestUri
     ): void {
+
         $path = parse_url($requestUri, PHP_URL_PATH) ?? '/';
 
+        $config = require __DIR__ . '/../../config/config.php';
+
         $baseUrl = rtrim(
-            (require __DIR__ . '/../../config/config.php')['app']['base_url'],
+            $config['app']['base_url'],
             '/'
         );
 
-        if ($baseUrl !== '' && str_starts_with($path, $baseUrl)) {
-            $path = substr($path, strlen($baseUrl));
+        /*
+         * /git-feature-index-home/product/abc
+         *        ↓
+         * /product/abc
+         */
+        if (
+            $baseUrl !== '' &&
+            str_starts_with($path, $baseUrl)
+        ) {
+            $path = substr(
+                $path,
+                strlen($baseUrl)
+            );
         }
 
         $path = '/' . trim($path, '/');
@@ -54,23 +68,85 @@ class Router
         }
 
         foreach ($this->routes as $route) {
-            if (
-                $route['method'] === $method &&
-                $route['path'] === $path
-            ) {
-                $this->callHandler($route['handler']);
-                return;
+
+            if ($route['method'] !== $method) {
+                continue;
             }
+
+            $params = $this->matchRoute(
+                $route['path'],
+                $path
+            );
+
+            if ($params === false) {
+                continue;
+            }
+
+            $this->callHandler(
+                $route['handler'],
+                $params
+            );
+
+            return;
         }
 
         http_response_code(404);
 
         $controller = new \App\Controllers\ErrorController();
+
         $controller->notFound();
     }
 
-    private function callHandler(array $handler): void
-    {
+    private function matchRoute(
+        string $routePath,
+        string $requestPath
+    ): array|false {
+
+        /*
+         *
+         * {id}
+         * {slug}
+         * {category}
+         */
+        $pattern = preg_replace(
+            '/\{([a-zA-Z_][a-zA-Z0-9_]*)\}/',
+            '(?P<$1>[^/]+)',
+            $routePath
+        );
+
+        if ($pattern === null) {
+            return false;
+        }
+
+        $pattern = '#^' . $pattern . '$#';
+
+        if (
+            preg_match(
+                $pattern,
+                $requestPath,
+                $matches
+            ) !== 1
+        ) {
+            return false;
+        }
+
+        $params = [];
+
+        foreach ($matches as $key => $value) {
+
+            if (is_string($key)) {
+                $params[$key] = urldecode($value);
+            }
+        }
+
+        return $params;
+    }
+
+    private function callHandler(
+        array $handler,
+        array $params = []
+    ): void {
+
         [$controllerClass, $method] = $handler;
 
         if (!class_exists($controllerClass)) {
@@ -87,6 +163,6 @@ class Router
             );
         }
 
-        $controller->{$method}();
+        $controller->{$method}(...array_values($params));
     }
 }
