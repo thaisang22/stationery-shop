@@ -233,6 +233,7 @@ require __DIR__ . '/../layouts/header.php'; ?>
         </div>
     </section>
 
+
     <!-- Blog Section -->
     <section class="section container blog-section">
         <div class="title-row">
@@ -242,45 +243,31 @@ require __DIR__ . '/../layouts/header.php'; ?>
             </div>
             <a href="<?= url('/posts') ?>" class="text-link">Đọc tất cả →</a>
         </div>
+
         <div class="blog-grid">
-            <article class="post-card">
-                <div class="post-image-wrapper">
-                    <span class="post-art">✍️</span>
-                </div>
-                <div class="post-body">
-                    <span class="post-date">12.08.2026</span>
-                    <h3>5 cách ghi chú giúp bạn học nhanh hơn</h3>
-                    <p>Một vài thói quen đơn giản để biến những trang vở thành công cụ học tập hiệu quả, kích thích sơ
-                        đồ tư duy.</p>
-                    <a href="<?= url('/posts') ?>" class="text-link">Xem thêm →</a>
-                </div>
-            </article>
+            <?php if (!empty($posts)): ?>
+                <?php foreach ($posts as $post): ?>
+                    <article class="post-card">
+                        <div class="post-image-wrapper">
+                            <?php if (!empty($post['img_post'])): ?><img src="<?= url('/public/' . ltrim((string) $post['img_post'], '/')) ?>" alt="<?= htmlspecialchars((string) $post['title']) ?>"><?php else: ?><span class="post-art">✍️</span><?php endif; ?>
+                        </div>
+                        <div class="post-body">
+                            <span class="post-date">
+                                <?= date('d.m.Y', strtotime($post['published_at'] ?? $post['created_at'])) ?>
+                            </span>
 
-            <article class="post-card">
-                <div class="post-image-wrapper beige-art">
-                    <span class="post-art">📚</span>
-                </div>
-                <div class="post-body">
-                    <span class="post-date">05.08.2026</span>
-                    <h3>Cách chọn sổ tay cho năm học mới</h3>
-                    <p>Từ kích thước, định lượng giấy đến cách chia trang, tìm chiếc sổ phù hợp với nhịp sống và thói
-                        quen journaling.</p>
-                    <a href="<?= url('/posts') ?>" class="text-link">Xem thêm →</a>
-                </div>
-            </article>
+                            <h3><?= htmlspecialchars($post['title']) ?></h3>
+                            <p>
+                                <?= htmlspecialchars(mb_substr(strip_tags($post['content']), 0, 100)) ?>...
+                            </p>
 
-            <article class="post-card">
-                <div class="post-image-wrapper sage-art">
-                    <span class="post-art">🪴</span>
-                </div>
-                <div class="post-body">
-                    <span class="post-date">29.07.2026</span>
-                    <h3>Góc bàn làm việc gọn gàng, tâm trí nhẹ nhàng</h3>
-                    <p>Gợi ý sắp xếp các vật dụng nhỏ, hộp bút lưới và khay đựng tài liệu để bạn duy trì sự tập trung
-                        tối đa.</p>
-                    <a href="<?= url('/posts') ?>" class="text-link">Xem thêm →</a>
-                </div>
-            </article>
+                            <a href="<?= url('/posts/' . $post['slug']) ?>" class="text-link">Xem thêm →</a>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Chưa có bài viết nào được đăng tải.</p>
+            <?php endif; ?>
         </div>
     </section>
 

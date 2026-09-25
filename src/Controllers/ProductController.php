@@ -14,7 +14,7 @@ class ProductController extends Controller
         $categories = $productModel->getCategorys();
         $brands = $productModel->getBrands();
         $filters = [
-            'category_slug' => $_GET['category'] ?? null,
+            'category_slug' => $_GET['category_slug'] ?? null,
             'brand_slug' => $_GET['brand'] ?? null,
             'price_range' => $_GET['price_range'] ?? null,
             'keyword' => $_GET['keyword'] ?? null,

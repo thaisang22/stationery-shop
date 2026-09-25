@@ -1,35 +1,39 @@
 <?php require __DIR__ . '/../layouts/header.php'; ?>
 
-<main class="page container"><span class="eyebrow">GÓC CẢM HỨNG</span>
-    <h1>Chuyện của giấy và bút</h1>
-    <p style="max-width:600px;color:var(--muted)">Những gợi ý nhỏ cho một ngày học tập, làm việc và sáng tạo nhiều
-        cảm hứng hơn.</p>
-    <div class="blog-grid" style="margin-top:28px">
-        <article class="post">
-            <div class="post-image">✍️</div>
-            <div class="post-body"><span class="eyebrow">12.08.2026</span>
-                <h3>5 cách ghi chú giúp bạn học nhanh hơn</h3>
-                <p>Một vài thói quen đơn giản để biến những trang vở thành công cụ học tập hiệu quả.</p><a
-                    class="text-link" href="#">Đọc bài viết →</a>
-            </div>
-        </article>
-        <article class="post">
-            <div class="post-image">📚</div>
-            <div class="post-body"><span class="eyebrow">05.08.2026</span>
-                <h3>Chọn sổ tay nào cho năm học mới?</h3>
-                <p>Từ kích thước, loại giấy đến cách chia trang, tìm chiếc sổ phù hợp với nhịp sống của bạn.</p><a
-                    class="text-link" href="#">Đọc bài viết →</a>
-            </div>
-        </article>
-        <article class="post">
-            <div class="post-image">🪴</div>
-            <div class="post-body"><span class="eyebrow">29.07.2026</span>
-                <h3>Góc bàn làm việc gọn gàng, tâm trí nhẹ nhàng</h3>
-                <p>Gợi ý sắp xếp các vật dụng nhỏ để bạn tập trung hơn mỗi ngày.</p><a class="text-link" href="#">Đọc
-                    bài viết →</a>
-            </div>
-        </article>
+<section class="section container blog-section">
+    <div class="title-row">
+        <div>
+            <span class="eyebrow">CẢM HỨNG</span>
+            <h2>Góc nhỏ Mộc Nhiên</h2>
+        </div>
+        <a href="<?= url('/posts') ?>" class="text-link">Đọc tất cả →</a>
     </div>
-</main>
+
+    <div class="blog-grid">
+        <?php if (!empty($listPosts)): ?>
+            <?php foreach ($listPosts as $post): ?>
+                <article class="post-card">
+                    <div class="post-image-wrapper">
+                        <?php if (!empty($post['img_post'])): ?><img src="<?= url('/public/' . ltrim((string) $post['img_post'], '/')) ?>" alt="<?= htmlspecialchars((string) $post['title']) ?>"><?php else: ?><span class="post-art">✍️</span><?php endif; ?>
+                    </div>
+                    <div class="post-body">
+                        <span class="post-date">
+                            <?= date('d.m.Y', strtotime($post['published_at'] ?? $post['created_at'])) ?>
+                        </span>
+
+                        <h3><?= htmlspecialchars($post['title']) ?></h3>
+                        <p>
+                            <?= htmlspecialchars(mb_substr(strip_tags($post['content']), 0, 100)) ?>...
+                        </p>
+
+                        <a href="<?= url('/posts/' . $post['slug']) ?>" class="text-link">Xem thêm →</a>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Chưa có bài viết nào được đăng tải.</p>
+        <?php endif; ?>
+    </div>
+</section>
 
 <?php require __DIR__ . '/../layouts/footer.php'; ?>

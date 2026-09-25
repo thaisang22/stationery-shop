@@ -7,6 +7,7 @@ use App\Controllers\HomeController;
 use App\Controllers\OrderController;
 use App\Controllers\PostController;
 use App\Controllers\ProductController;
+use App\Controllers\Admin\PostControllerAdmin;
 
 $router->get('/', [
     HomeController::class,
@@ -64,11 +65,22 @@ $router->get('/posts', [
     'index'
 ]);
 
+$router->get('/posts/{slug}', [
+    PostController::class,
+    'detail'
+]);
+
 $router->get('/admin', [AdminController::class, 'dashboard']);
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/products', [AdminController::class, 'products']);
 $router->get('/admin/categories', [AdminController::class, 'categories']);
 $router->get('/admin/orders', [AdminController::class, 'orders']);
 $router->get('/admin/customers', [AdminController::class, 'customers']);
-$router->get('/admin/posts', [AdminController::class, 'posts']);
+$router->get('/admin/posts', [PostControllerAdmin::class, 'posts']);
+$router->get('/admin/posts/create', [PostControllerAdmin::class, 'createPost']);
+$router->post('/admin/posts', [PostControllerAdmin::class, 'storePost']);
+$router->get('/admin/posts/{id}/edit', [PostControllerAdmin::class, 'editPost']);
+$router->post('/admin/posts/{id}', [PostControllerAdmin::class, 'updatePost']);
+$router->post('/admin/posts/{id}/hidden', [PostControllerAdmin::class, 'toggleHidden']);
+$router->post('/admin/posts/{id}/delete', [PostControllerAdmin::class, 'deletePost']);
 $router->get('/admin/sales', [AdminController::class, 'sales']);

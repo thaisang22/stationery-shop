@@ -20,7 +20,8 @@
     <!-- load page -->
     <?php if (!empty($pageCss)): ?>
         <?php foreach ((array) $pageCss as $css): ?>
-            <link rel="stylesheet" href="<?= url('/public/css/' . $css . '.css') ?>">
+            <?php $cssFile = __DIR__ . '/../../../public/css/' . $css . '.css'; ?>
+            <link rel="stylesheet" href="<?= url('/public/css/' . $css . '.css') ?>?v=<?= file_exists($cssFile) ? filemtime($cssFile) : '' ?>">
         <?php endforeach; ?>
     <?php endif; ?>
 </head>
