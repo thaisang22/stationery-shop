@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Controller;
+use App\Models\Post;
 
 class AdminController extends Controller
 {
@@ -28,11 +29,6 @@ class AdminController extends Controller
     {
         $this->view('admin/categories');
     }
-    public function posts(): void
-    {
-        $this->view('admin/posts');
-    }
-
     public function sales(): void
     {
         $this->view('admin/sales');
