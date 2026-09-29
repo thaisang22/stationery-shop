@@ -62,7 +62,7 @@
                 <button class="icon-link mobile-search-trigger" onclick="toggleMobileSearch()" aria-label="Tìm kiếm">
                     ⌕
                 </button>
-
+                <!--Kiểm tra nếu có session user_id thay tài khoản bằng name user -->
                 <!-- Tài khoản -->
                 <a class="icon-link account-link" href="<?= url('/login') ?>" title="Tài khoản">
                     <span class="account-text">Tài khoản</span>

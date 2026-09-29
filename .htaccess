@@ -1,7 +1,7 @@
 RewriteEngine On
 
 #produtionc is / /
-RewriteBase /git-feature-index-home/ 
+RewriteBase /git-feature-login/ 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -7,7 +7,7 @@ return [
         'name' => 'Stationery Store',
         
         // PROD is /
-        'base_url' => '/git-feature-index-home', 
+        'base_url' => '/git-feature-login', 
     ],
 
     'database' => [

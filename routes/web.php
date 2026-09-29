@@ -46,12 +46,21 @@ $router->get('/login', [
     'login'
 ]);
 
+$router->post('/login', [
+    AuthController::class,
+    'login'
+]);
 $router->post('/login/mock', [
     AuthController::class,
     'mockLogin'
 ]);
 
 $router->get('/register', [
+    AuthController::class,
+    'register'
+]);
+
+$router->post('/register', [
     AuthController::class,
     'register'
 ]);
