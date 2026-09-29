@@ -66,7 +66,7 @@ $queryParams = $_GET;
                     <label>
                         <input 
                             type="radio" 
-                            name="category" 
+                            name="category_slug" 
                             value="" 
                             <?= empty($filters['category_slug']) ? 'checked' : '' ?>
                             onchange="this.form.submit()"
@@ -89,15 +89,15 @@ $queryParams = $_GET;
                         <?php endforeach; ?>
                     <?php else: ?>
                         <label>
-                            <input type="radio" name="category" value="but-viet" <?= ($filters['category_slug'] ?? '') === 'but-viet' ? 'checked' : '' ?> onchange="this.form.submit()">
+                            <input type="radio" name="category_slug" value="but-viet" <?= ($filters['category_slug'] ?? '') === 'but-viet' ? 'checked' : '' ?> onchange="this.form.submit()">
                             Bút viết
                         </label>
                         <label>
-                            <input type="radio" name="category" value="vo-so-tay" <?= ($filters['category_slug'] ?? '') === 'vo-so-tay' ? 'checked' : '' ?> onchange="this.form.submit()">
+                            <input type="radio" name="category_slug" value="vo-so-tay" <?= ($filters['category_slug'] ?? '') === 'vo-so-tay' ? 'checked' : '' ?> onchange="this.form.submit()">
                             Vở & sổ tay
                         </label>
                         <label>
-                            <input type="radio" name="category" value="giay-cac-loai" <?= ($filters['category_slug'] ?? '') === 'giay-cac-loai' ? 'checked' : '' ?> onchange="this.form.submit()">
+                            <input type="radio" name="category_slug" value="giay-cac-loai" <?= ($filters['category_slug'] ?? '') === 'giay-cac-loai' ? 'checked' : '' ?> onchange="this.form.submit()">
                             Giấy các loại
                         </label>
                     <?php endif; ?>
