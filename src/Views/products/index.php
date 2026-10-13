@@ -79,7 +79,7 @@ $queryParams = $_GET;
                             <label>
                                 <input 
                                     type="radio" 
-                                    name="category" 
+                                    name="category_slug" 
                                     value="<?= htmlspecialchars($cat['slug']) ?>"
                                     <?= ($filters['category_slug'] ?? '') === $cat['slug'] ? 'checked' : '' ?>
                                     onchange="this.form.submit()"
@@ -286,9 +286,11 @@ $queryParams = $_GET;
 
                                     <!-- CART -->
                                     <div class="card-actions">
-                                        <a class="btn" href="<?= url('/cart') ?>">
-                                            Thêm giỏ
-                                        </a>
+                                         <form action="<?= url('/cart/add') ?>" method="POST" style="width: 100%;">
+                                        <input type="hidden" name="variant_id" value="<?= (int) ($product['variant_id'] ?? 0) ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-add-cart" style="width: 100%; border: none; cursor: pointer;">Thêm vào giỏ</button>
+                                    </form>
                                     </div>
 
                                 </div>

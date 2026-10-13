@@ -337,6 +337,24 @@
     background: none;
 }
 
+@media (max-width: 1200px) {
+    .admin-filter-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sales-charts-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-filter-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 @media (max-width: 900px) {
     .stats {
         grid-template-columns: repeat(2, 1fr);

@@ -24,6 +24,10 @@ $adminTitle = $adminTitle ?? 'Quản trị';
   <div class="admin">
     <header class="admin-header">
       <a class="logo" href="<?= url('/') ?>">mộc <span>nhiên</span> <small>ADMIN</small></a>
-      <span>Xin chào, Quản trị viên · <a href="<?= url('/') ?>">Xem cửa hàng</a></span>
+      <span>
+        Xin chào, <strong><?= htmlspecialchars($_SESSION['user']['full_name'] ?? 'Quản trị viên') ?></strong> · 
+        <a href="<?= url('/') ?>" target="_blank">Xem cửa hàng</a> · 
+        <a href="<?= url('/admin/logout') ?>" style="color: #c53030; font-weight: 600; text-decoration: none; margin-left: 6px;">Đăng xuất</a>
+      </span>
     </header>
     <div class="admin-layout">

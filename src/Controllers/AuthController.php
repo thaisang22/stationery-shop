@@ -43,15 +43,27 @@ class AuthController extends Controller
 
         // Đăng nhập thành công
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_role'] = $user['role'] ?? 'CUSTOMER';
 
         $_SESSION['user'] = [
             'id' => $user['id'],
             'full_name' => $user['full_name'],
             'email' => $user['email'],
+            'role' => $user['role'] ?? 'CUSTOMER',
         ];
 
-        header('Location: ' . url('/'));
+        // Đồng bộ giỏ hàng từ session vào DB nếu có
+        if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+            (new \App\Models\Cart())->mergeSessionCartToDb((int) $user['id'], $_SESSION['cart']);
+            unset($_SESSION['cart']);
+        }
+
+        $redirect = $_SESSION['redirect_after_login'] ?? '/';
+        unset($_SESSION['redirect_after_login']);
+
+        header('Location: ' . url($redirect));
         exit;
+
     }
 
     public function register(): void

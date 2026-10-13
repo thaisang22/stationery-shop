@@ -188,6 +188,7 @@ class Product extends Model
     {
         $sql = "SELECT 
                 p.*, 
+                pv_primary.id AS variant_id,
                 pv_primary.image_url,
                 COALESCE(SUM(pv.sold), 0) AS total_sold
             FROM products p
@@ -196,7 +197,7 @@ class Product extends Model
             LEFT JOIN product_variants pv_primary 
                    ON p.id = pv_primary.product_id AND pv_primary.is_primary = 1
             WHERE p.hidden_at IS NULL
-            GROUP BY p.id, pv_primary.image_url
+            GROUP BY p.id, pv_primary.id, pv_primary.image_url
             ORDER BY total_sold DESC, p.id DESC
             LIMIT :limit";
 
@@ -209,7 +210,7 @@ class Product extends Model
 
     public function productsNew(int $limit = 5): array
     {
-        $sql = "SELECT p.*, pv.image_url,
+        $sql = "SELECT p.*, pv.id AS variant_id, pv.image_url,
                 (SELECT COALESCE(SUM(sold), 0) FROM product_variants WHERE product_id = p.id AND hidden_at IS NULL) AS total_sold
             FROM products p
             LEFT JOIN product_variants pv 

@@ -2,7 +2,7 @@
 <!-- Thêm đoạn này để hiển thị lỗi nếu có -->
 <?php if (isset($_SESSION['error'])): ?>
     <div style="background-color: #ffebe9; color: #d03538; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f8c4c3;">
-        ⚠️ <?= htmlspecialchars($_SESSION['error']) ?>
+        <?= htmlspecialchars($_SESSION['error']) ?>
     </div>
     <?php unset($_SESSION['error']); ?>
 <?php endif; ?>
@@ -47,7 +47,7 @@
                     <label for="payment_method">Phương thức thanh toán *</label>
                     <select id="payment_method" name="payment_method" required>
                         <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                        <option value="bank_transfer">Chuyển khoản ngân hàng</option>
+                        <option value="bank_transfer">Chuyển khoản ngân hàng qua mã QR (SePay)</option>
                         <option value="momo">Ví điện tử MoMo</option>
                     </select>
                 </div>
