@@ -8,5 +8,18 @@ use App\Core\Model;
 
 class Category extends Model
 {
-    // Database queries for categories will be added here later.
+    /**
+     * Lấy danh sách tất cả danh mục đang hoạt động
+     *
+     * @return array
+     */
+    public function getAllActive(): array
+    {
+        $statement = $this->db->prepare(
+            'SELECT * FROM categories WHERE hidden_at IS NULL ORDER BY name ASC'
+        );
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
 }

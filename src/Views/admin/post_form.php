@@ -8,7 +8,7 @@ $published = isset($old['is_published']) || ($isEditing && empty($post['hidden_a
 require_once __DIR__ . '/partials/header.php';
 require_once __DIR__ . '/partials/sidebar.php';
 ?>
-<main class="admin-main"><a class="text-link" href="<?= url('/admin/posts') ?>">← Quay lại danh sách bài viết</a>
+<main class="admin-main"><a class="text-link" href="<?= url('/admin/posts') ?>">Quay lại danh sách bài viết</a>
     <h1><?= $isEditing ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' ?></h1>
     <form class="admin-panel post-form" action="<?= url($isEditing ? '/admin/posts/' . $post['id'] : '/admin/posts') ?>"
         method="post" enctype="multipart/form-data"><input type="hidden" name="_token"
@@ -35,10 +35,10 @@ require_once __DIR__ . '/partials/sidebar.php';
                         data-value="h3">H3</button><button type="button" data-command="bold"><b>B</b></button><button
                         type="button" data-command="italic"><i>I</i></button><button type="button"
                         data-command="underline"><u>U</u></button><button type="button"
-                        data-command="insertUnorderedList">• Danh sách</button><button type="button"
+                        data-command="insertUnorderedList">Danh sách</button><button type="button"
                         data-command="insertOrderedList">1. Danh sách</button><button type="button"
-                        data-command="formatBlock" data-value="blockquote">❝ Trích dẫn</button><button type="button"
-                        id="add-link">↗ Liên kết</button><button type="button" data-command="removeFormat">Xóa định
+                        data-command="formatBlock" data-value="blockquote">Trích dẫn</button><button type="button"
+                        id="add-link">Liên kết</button><button type="button" data-command="removeFormat">Xóa định
                         dạng</button></div>
                 <div id="editor" class="rich-editor" contenteditable="true"
                     data-placeholder="Viết nội dung bài viết tại đây…"><?= $content ?></div><textarea name="content"

@@ -6,6 +6,38 @@ use App\Core\Controller;
 use App\Models\Post;
 class PostControllerAdmin extends Controller
 {
+    public function __construct()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isLoggedIn() || !isAdmin()) {
+            $config = require dirname(__DIR__, 3) . '/config/config.php';
+            $baseUrl = rtrim((string) ($config['app']['base_url'] ?? ''), '/');
+            $basePath = rtrim((string) (parse_url($baseUrl, PHP_URL_PATH) ?? ''), '/');
+
+            $requestUri = $_SERVER['REQUEST_URI'] ?? '/admin/posts';
+            $path = (string) (parse_url($requestUri, PHP_URL_PATH) ?? '/admin/posts');
+
+            if ($basePath !== '' && str_starts_with($path, $basePath)) {
+                $path = substr($path, strlen($basePath));
+            }
+
+            $path = '/' . ltrim($path, '/');
+            $query = parse_url($requestUri, PHP_URL_QUERY);
+            $target = $path . ($query ? '?' . $query : '');
+
+            if ($target === '/' || $target === '/admin/login' || $target === '') {
+                $target = '/admin/posts';
+            }
+
+            $_SESSION['redirect_after_admin_login'] = $target;
+            $_SESSION['admin_login_error'] = 'Vui lòng đăng nhập với tài khoản Quản trị viên để truy cập.';
+            header('Location: ' . url('/admin/login'));
+            exit();
+        }
+    }
+
     public function posts(): void
     {
         $this->view('admin/posts', [

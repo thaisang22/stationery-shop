@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Controllers\LayoutController;
+
 abstract class Controller
 {
     protected function view(
         string $view,
         array $data = []
     ): void {
+        $layoutController = new LayoutController();
+        $layoutData = $layoutController->getHeaderData();
+        $data = array_merge(
+            $layoutData,
+            $data
+        );
+
         extract($data);
 
         $viewFile = __DIR__

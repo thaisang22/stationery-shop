@@ -105,7 +105,11 @@ require __DIR__ . '/../layouts/header.php'; ?>
                                     <?php endif; ?>
                                 </div>
                                 <div class="card-actions">
-                                    <a class="btn btn-add-cart" href="<?= url('/cart') ?>">Thêm vào giỏ</a>
+                                    <form action="<?= url('/cart/add') ?>" method="POST" style="width: 100%;">
+                                        <input type="hidden" name="variant_id" value="<?= (int) ($product['variant_id'] ?? 0) ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-add-cart" style="width: 100%; border: none; cursor: pointer;">Thêm vào giỏ</button>
+                                    </form>
                                 </div>
                             </div>
                         </article>
@@ -171,7 +175,11 @@ require __DIR__ . '/../layouts/header.php'; ?>
                                 <span class="price"><?= number_format((float) $product['price'], 0, ',', '.') ?>₫</span>
                             </div>
                             <div class="card-actions">
-                                <a class="btn btn-add-cart" href="<?= url('/cart') ?>">Thêm vào giỏ</a>
+                                <form action="<?= url('/cart/add') ?>" method="POST" style="width: 100%;">
+                                    <input type="hidden" name="variant_id" value="<?= (int) ($product['variant_id'] ?? 0) ?>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-add-cart" style="width: 100%; border: none; cursor: pointer;">Thêm vào giỏ</button>
+                                </form>
                             </div>
                         </div>
                     </article>

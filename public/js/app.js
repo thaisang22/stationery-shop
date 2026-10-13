@@ -15,3 +15,4 @@ function toggleMobileSearch() {
         header.classList.toggle('searching');
     }
 }
+

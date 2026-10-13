@@ -1,6 +1,12 @@
+<?php 
+
+/**
+ * @var int $cartCount
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +27,8 @@
     <?php if (!empty($pageCss)): ?>
         <?php foreach ((array) $pageCss as $css): ?>
             <?php $cssFile = __DIR__ . '/../../../public/css/' . $css . '.css'; ?>
-            <link rel="stylesheet" href="<?= url('/public/css/' . $css . '.css') ?>?v=<?= file_exists($cssFile) ? filemtime($cssFile) : '' ?>">
+            <link rel="stylesheet"
+                href="<?= url('/public/css/' . $css . '.css') ?>?v=<?= file_exists($cssFile) ? filemtime($cssFile) : '' ?>">
         <?php endforeach; ?>
     <?php endif; ?>
 </head>
@@ -51,8 +58,8 @@
             </a>
 
             <!-- Search Bar -->
-            <form class="search" onsubmit="search(event)">
-                <input id="search-input" placeholder="Tìm bút, sổ tay, dụng cụ học tập..." aria-label="Tìm kiếm">
+            <form class="search" action="<?= url('/products') ?>" method="GET">
+                <input id="search-input" name="keyword" value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>" placeholder="Tìm bút, sổ tay, dụng cụ học tập..." aria-label="Tìm kiếm">
                 <button type="submit" aria-label="Tìm">⌕</button>
             </form>
 
@@ -64,8 +71,18 @@
                 </button>
                 <!--Kiểm tra nếu có session user_id thay tài khoản bằng name user -->
                 <!-- Tài khoản -->
-                <a class="icon-link account-link" href="<?= url('/login') ?>" title="Tài khoản">
-                    <span class="account-text">Tài khoản</span>
+                <a class="icon-link account-link" href="<?= url('/profile') ?>" title="Tài khoản">
+                    <?php if (!empty($user)): ?>
+
+                        <span class="account-text">
+                            <?= htmlspecialchars($user['full_name']) ?>
+                        </span>
+
+                    <?php else: ?>
+                        <span class="account-text">
+                            Tài khoản
+                        </span>
+                    <?php endif; ?>
                     <span class="account-icon">👤</span>
                 </a>
 
@@ -73,20 +90,6 @@
                 <a class="icon-link" href="<?= url('/wishlist') ?>" aria-label="Sản phẩm yêu thích" title="Yêu thích">
                     ♡
                 </a>
-
-                <?php
-                // Tự động tính số lượng badge trực tiếp từ Model hoặc Session
-                $cartCount = 0;
-
-                if (isset($_SESSION['user_id'])) {
-                    // Nếu đã đăng nhập: Lấy số lượng từ Model Cart
-                    $cartModel = new \App\Models\Cart();
-                    $cartCount = $cartModel->getTotalQuantity((int) $_SESSION['user_id']);
-                } elseif (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-                    // Nếu chưa đăng nhập: Tính tổng số lượng từ Session
-                    $cartCount = (int) array_sum($_SESSION['cart']);
-                }
-                ?>
 
                 <a class="icon-link cart-link" href="<?= url('/cart') ?>" aria-label="Giỏ hàng" title="Giỏ hàng">
                     🛒
@@ -101,7 +104,19 @@
         <nav class="nav" id="main-nav">
             <div class="container nav-row">
                 <a href="<?= url('/') ?>">Trang chủ</a>
-                <a href="<?= url('/products') ?>">Sản phẩm</a>
+                <div class="nav-dropdown">
+                    <a href="<?= url('/products') ?>">Sản phẩm ▾</a>
+                    <?php if (!empty($categories)): ?>
+                        <div class="dropdown-menu">
+                            <a href="<?= url('/products') ?>">Tất cả sản phẩm</a>
+                            <?php foreach ($categories as $cat): ?>
+                                <a href="<?= url('/products?category_slug=' . htmlspecialchars($cat['slug'])) ?>">
+                                    <?= htmlspecialchars($cat['name']) ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
                 <a href="<?= url('/posts') ?>">Bài viết </a>
                 <a href="<?= url('/#brand-story') ?>">Về Mộc Nhiên</a>
             </div>
