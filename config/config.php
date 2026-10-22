@@ -10,7 +10,7 @@ return [
         'base_url' => '/stationery',
     ],
 
-    'database' => [
+ 'database' => [
         'host' => '127.0.0.1',
         'port' => 3306,
         'name' => 'stationery_shop',
@@ -18,7 +18,6 @@ return [
         'password' => '',
         'charset' => 'utf8mb4',
     ],
-
     'mail' => [
         'driver' => 'smtp', // 'smtp' hoặc 'mail'
         'host' => 'smtp.gmail.com',

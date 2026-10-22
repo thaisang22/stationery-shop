@@ -13,7 +13,7 @@ require_once __DIR__ . '/partials/sidebar.php';
         <div class="stat">
             <span>DOANH THU HÔM NAY</span>
             <b><?= number_format((float)($todayRevenue ?? 0), 0, ',', '.') ?>₫</b>
-            <i class="trend">Đơn không bị hủy</i>
+            <i class="trend">Đơn đã thanh toán</i>
         </div>
         <div class="stat">
             <span>TỔNG ĐƠN HÀNG</span>

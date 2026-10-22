@@ -53,17 +53,11 @@ class UserProfileController extends Controller
 
         unset($_SESSION['profile_success'], $_SESSION['profile_error']);
 
-        // Đọc cấu hình Mail hiện tại từ config để hiển thị trong tab cấu hình email
-        $configFile = __DIR__ . '/../../config/config.php';
-        $allConfig = file_exists($configFile) ? require $configFile : [];
-        $mailConfig = $allConfig['mail'] ?? [];
-
         $this->view('userprofile/index', [
             'pageTitle'      => 'Trang cá nhân - ' . htmlspecialchars($user['full_name']),
             'pageCss'        => ['userprofile'],
             'user'           => $user,
             'orders'         => $orders,
-            'mailConfig'     => $mailConfig,
             'successMessage' => $successMessage,
             'errorMessage'   => $errorMessage,
         ]);
@@ -168,39 +162,6 @@ class UserProfileController extends Controller
         }
 
         header('Location: ' . url('/profile?tab=password'));
-        exit;
-    }
-
-    /**
-     * Xử lý gửi mail thử nghiệm từ trang cấu hình mail
-     */
-    public function testMail(): void
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (empty($_SESSION['user_id']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: ' . url('/profile'));
-            exit;
-        }
-
-        $testEmail = trim($_POST['test_email'] ?? '');
-        if (empty($testEmail) || !filter_var($testEmail, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->userModel->findById((int)$_SESSION['user_id']);
-            $testEmail = $user['email'] ?? '';
-        }
-
-        $res = $this->mailService->sendTestMail($testEmail);
-
-        if ($res['success']) {
-            $_SESSION['profile_success'] = 'Gửi email kiểm tra thành công tới: ' . htmlspecialchars($testEmail);
-        } else {
-            $_SESSION['profile_error'] = 'Gửi email thất bại: ' . htmlspecialchars($res['message']);
-        }
-
-
-        header('Location: ' . url('/profile?tab=email'));
         exit;
     }
 }

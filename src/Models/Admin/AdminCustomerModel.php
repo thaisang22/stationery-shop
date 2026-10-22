@@ -19,7 +19,7 @@ class AdminCustomerModel extends Model
         $sql = "
             SELECT u.*,
                    (SELECT COUNT(*) FROM orders WHERE user_id = u.id) AS order_count,
-                   (SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE user_id = u.id AND order_status != 'CANCELLED') AS total_spent
+                   (SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE user_id = u.id AND order_status != 'CANCELLED' AND payment_status = 'PAID') AS total_spent
             FROM users u
             WHERE u.role = 'CUSTOMER'
             ORDER BY u.id DESC

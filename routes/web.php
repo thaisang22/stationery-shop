@@ -84,7 +84,6 @@ $router->post('/logout', [
 $router->get('/profile', [UserProfileController::class, 'index']);
 $router->post('/profile/update', [UserProfileController::class, 'updateInfo']);
 $router->post('/profile/change-password', [UserProfileController::class, 'changePassword']);
-$router->post('/profile/test-email', [UserProfileController::class, 'testMail']);
 
 $router->get('/checkout', [App\Controllers\OrderController::class, 'checkout']);
 

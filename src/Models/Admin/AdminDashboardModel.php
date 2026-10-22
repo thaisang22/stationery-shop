@@ -10,14 +10,16 @@ use PDO;
 class AdminDashboardModel extends Model
 {
     /**
-     * Doanh thu hôm nay (chỉ tính đơn không bị hủy)
+     * Doanh thu hôm nay (chỉ tính đơn đã thanh toán và không bị hủy)
      */
     public function getTodayRevenue(): float
     {
         $stmt = $this->db->query("
             SELECT COALESCE(SUM(total_amount), 0) 
             FROM orders 
-            WHERE DATE(created_at) = CURDATE() AND order_status != 'CANCELLED'
+            WHERE DATE(created_at) = CURDATE() 
+              AND order_status != 'CANCELLED' 
+              AND payment_status = 'PAID'
         ");
         return (float) $stmt->fetchColumn();
     }
