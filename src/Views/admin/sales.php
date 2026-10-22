@@ -57,7 +57,7 @@ foreach (($paymentStats ?? []) as $p) {
         <div class="stat">
             <span>TỔNG DOANH THU TOÀN CỬA HÀNG</span>
             <b style="color: #276238;"><?= number_format((float)($summary['total_revenue'] ?? 0), 0, ',', '.') ?>₫</b>
-            <i class="trend" style="font-style: normal; color: #666;">Đơn hàng không bị hủy</i>
+            <i class="trend" style="font-style: normal; color: #666;">Đơn đã thanh toán (PAID)</i>
         </div>
         <div class="stat">
             <span>TỔNG SỐ ĐƠN HÀNG</span>
@@ -73,13 +73,16 @@ foreach (($paymentStats ?? []) as $p) {
             <span>GIÁ TRỊ ĐƠN TRUNG BÌNH (AOV)</span>
             <b>
                 <?php 
-                    $avg = ($summary['total_orders'] ?? 0) > 0 
-                        ? ($summary['total_revenue'] / $summary['total_orders']) 
+                    $orderCountForAov = ($summary['paid_orders'] ?? 0) > 0 
+                        ? (int)$summary['paid_orders'] 
+                        : (int)($summary['total_orders'] ?? 0);
+                    $avg = $orderCountForAov > 0 
+                        ? ($summary['total_revenue'] / $orderCountForAov) 
                         : 0;
                     echo number_format((float)$avg, 0, ',', '.') . '₫';
                 ?>
             </b>
-            <i class="trend" style="font-style: normal; color: #666;">Doanh thu / Đơn hàng</i>
+            <i class="trend" style="font-style: normal; color: #666;">Doanh thu / Đơn đã thanh toán</i>
         </div>
     </div>
 

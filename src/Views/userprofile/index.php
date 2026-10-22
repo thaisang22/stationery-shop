@@ -3,7 +3,6 @@
  * View Trang Cá Nhân / Profile của User
  * @var array $user
  * @var array $orders
- * @var array $mailConfig
  * @var string|null $successMessage
  * @var string|null $errorMessage
  */
@@ -73,11 +72,6 @@ $initials = mb_strtoupper(mb_substr($user['full_name'] ?? 'U', 0, 1, 'UTF-8'));
                 <li>
                     <button type="button" class="nav-tab-btn <?= $activeTab === 'orders' ? 'active' : '' ?>" onclick="switchTab('orders')">
                         <span>Lịch sử đơn hàng (<?= count($orders) ?>)</span>
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="nav-tab-btn <?= $activeTab === 'email' ? 'active' : '' ?>" onclick="switchTab('email')">
-                        <span>Cấu hình Mail & Thông báo</span>
                     </button>
                 </li>
                 <li>
@@ -258,75 +252,6 @@ $initials = mb_strtoupper(mb_substr($user['full_name'] ?? 'U', 0, 1, 'UTF-8'));
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-            </div>
-
-            <!-- TAB 4: CẤU HÌNH MAIL & THÔNG BÁO -->
-            <div id="tab-email" class="tab-pane <?= $activeTab === 'email' ? 'active' : '' ?>">
-                <h2 class="tab-title">Cấu hình Mail & Thông báo</h2>
-                <p class="tab-subtitle">Hệ thống gửi email tự động xác nhận đơn hàng, thay đổi mật khẩu và thông báo khuyến mãi.</p>
-
-                <!-- Thẻ thông số cấu hình SMTP hiện tại -->
-                <div class="mail-config-card">
-                    <h3 style="font-size: 16px; color: var(--green-dark); margin-bottom: 8px;">Thông số SMTP Mail đang cấu hình</h3>
-                    <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Các thông số bên dưới được thiết lập trong <code>config/config.php</code> của ứng dụng.</p>
-
-                    <div class="mail-config-grid">
-                        <div class="mail-info-item">
-                            <div class="mail-info-label">Giao thức (Driver)</div>
-                            <div class="mail-info-value"><?= strtoupper(htmlspecialchars($mailConfig['driver'] ?? 'SMTP')) ?></div>
-                        </div>
-                        <div class="mail-info-item">
-                            <div class="mail-info-label">Máy chủ (SMTP Host)</div>
-                            <div class="mail-info-value"><?= htmlspecialchars($mailConfig['host'] ?? 'smtp.gmail.com') ?></div>
-                        </div>
-                        <div class="mail-info-item">
-                            <div class="mail-info-label">Cổng (Port)</div>
-                            <div class="mail-info-value"><?= htmlspecialchars((string)($mailConfig['port'] ?? 587)) ?> (<?= strtoupper(htmlspecialchars($mailConfig['encryption'] ?? 'TLS')) ?>)</div>
-                        </div>
-                        <div class="mail-info-item">
-                            <div class="mail-info-label">Email gửi (From)</div>
-                            <div class="mail-info-value"><?= htmlspecialchars($mailConfig['from_address'] ?? 'thaisang06072004@gmail.com') ?></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Gửi Thử Email Kiểm Tra -->
-                <form action="<?= url('/profile/test-email') ?>" method="POST" style="background: #ffffff; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 28px;">
-                    <h3 style="font-size: 16px; color: var(--green-dark); margin-bottom: 8px;">Gửi mail kiểm tra (Test Email)</h3>
-                    <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">Gửi thử 1 email thông báo chuẩn định dạng HTML thương hiệu Mộc Nhiên đến địa chỉ email bên dưới để kiểm tra kết nối SMTP.</p>
-
-                    <div class="form-group" style="max-width: 480px;">
-                        <label class="form-label" for="test_email">Địa chỉ Email nhận thử nghiệm</label>
-                        <input type="email" id="test_email" name="test_email" class="form-control" 
-                               value="<?= htmlspecialchars($user['email']) ?>" placeholder="nhapemail@gmail.com" required>
-                    </div>
-
-                    <button type="submit" class="btn">
-                        Thực hiện gửi Email thử nghiệm
-                    </button>
-                </form>
-
-                <!-- Tùy chọn nhận thông báo cá nhân -->
-                <div style="border-top: 1px solid var(--line); padding-top: 24px;">
-                    <h3 style="font-size: 16px; color: var(--green-dark); margin-bottom: 16px;">Cài đặt nhận thông báo email</h3>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 14px;">
-                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
-                            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--green);">
-                            <span>Nhận email tự động xác nhận đơn hàng & cập nhật trạng thái vận chuyển</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
-                            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--green);">
-                            <span>Nhận email cảnh báo bảo mật khi cập nhật thông tin / mật khẩu tài khoản</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
-                            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--green);">
-                            <span>Nhận bản tin tin tức bài viết mới & mã giảm giá đặc quyền từ Mộc Nhiên</span>
-                        </label>
-                    </div>
-                </div>
-
-            </div>
 
         </main>
     </div>
@@ -368,7 +293,7 @@ function switchTab(tabName) {
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    if (tabParam && ['info', 'password', 'orders', 'email'].includes(tabParam)) {
+    if (tabParam && ['info', 'password', 'orders'].includes(tabParam)) {
         switchTab(tabParam);
     }
 });
