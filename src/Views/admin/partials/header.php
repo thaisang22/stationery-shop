@@ -9,8 +9,9 @@ $adminTitle = $adminTitle ?? 'Quản trị';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= htmlspecialchars($adminTitle) ?> | Mộc Nhiên</title>
+  <link rel="icon" type="image/svg+xml" href="<?= url('/public/images/favicon.svg') ?>">
   <link rel="stylesheet" href="<?= url('/public/css/base.css') ?>">
-  <link rel="stylesheet" href="<?= url('/public/css/admin.css') ?>?>">
+  <link rel="stylesheet" href="<?= url('/public/css/admin.css') ?>">
   <link rel="stylesheet" href="<?= url('/public/css/ui.css') ?>">
   <!-- load page -->
   <?php if (!empty($pageCss)): ?>
