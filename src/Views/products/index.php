@@ -23,10 +23,11 @@ $queryParams = $_GET;
 
     <h1>Tất cả sản phẩm</h1>
 
-    <!-- FORM filters -->
-    <form method="GET" action="<?= url('/products') ?>" id="filter-form">
+    <div class="listing">
 
-        <div class="listing">
+        <!-- FORM filters -->
+        <form method="GET" action="<?= url('/products') ?>" id="filter-form">
+            <input type="hidden" name="sort" id="filter-sort-input" value="<?= htmlspecialchars($filters['sort'] ?? 'newest') ?>">
 
             <!-- FILTER SIDEBAR -->
             <aside class="filter">
@@ -208,7 +209,7 @@ $queryParams = $_GET;
                 </div>
 
             </aside>
-
+        </form>
 
             <!-- PRODUCTS DISPLAY SECTION -->
             <div>
@@ -220,7 +221,7 @@ $queryParams = $_GET;
                         <?= $total ?? count($products) ?> sản phẩm
                     </span>
 
-                    <select name="sort" onchange="this.form.submit()">
+                    <select name="sort" onchange="document.getElementById('filter-sort-input').value = this.value; document.getElementById('filter-form').submit();">
                         <option value="newest" <?= ($filters['sort'] ?? '') === 'newest' ? 'selected' : '' ?>>
                             Mới nhất
                         </option>
@@ -337,8 +338,6 @@ $queryParams = $_GET;
             </div>
 
         </div>
-
-    </form>
 
 </main>
 

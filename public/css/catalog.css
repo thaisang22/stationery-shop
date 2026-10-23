@@ -19,6 +19,10 @@
 }
 
 /* Filter Sidebar */
+#filter-form {
+    align-self: start;
+}
+
 .filter {
     align-self: start;
     padding: 28px;
